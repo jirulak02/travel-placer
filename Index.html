@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Travel Placer</title>
+	<script type="text/javascript" src="./main.js"></script>
+	<link rel="stylesheet" type="text/css" href="./main.css">
+	<script type="text/javascript" src="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.js"></script>
+	<link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/place-search-js/v1.0.0/place-search.css"/>
+	<script src="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.js"></script>
+	<link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-js/v1.3.2/mapquest.css"/>
+</head>
+
+<!-- Body -->
+<body>
+	<nav>
+
+<!-- Logo -->
+		<div class="logo">
+			<img src="./Images/T-Placer 1.png" class="inline">
+		</div>
+
+<!-- Filter Menu -->
+		<span class="open-slide">
+			<a href="#" class="a-filters" onclick="callOne()">
+				<img src="./Images/Filters icon.png" class="menu">
+			</a>
+		</span>
+
+<!-- Search -->
+		<ul class="nav-float">
+			<li class="inline">
+				<form action="" method="">
+					<button type="submit" class="search-button" onclick="openSearch()"><img src="./Images/Search icon.png" class="search-icon"></button>
+					<input type="text" name="search" id="search" placeholder="Search" class="search" autocomplete="off" oninvalid="this.setCustomValidity(' ')" oninput="this.setCustomValidity('')" title="" required>
+				</form>
+				<form action="" method="">
+					<button type="submit" class="search-button-mobile" id="search-button-mobile"><img src="./Images/Search icon.png" class="search-icon-mobile"></button>
+					<input type="text" name="search-mobile" id="search-mobile" placeholder="Search" class="search-mobile" autocomplete="off" oninvalid="this.setCustomValidity(' ')" oninput="this.setCustomValidity('')" title="" required>
+					<button type="reset" id="search-btn-close" onclick="closeSearch()" class="search-btn-close">&times;</button>
+				</form>
+			</li>
+
+<!-- Plus -->
+			<span class="plus">
+				<a href="#" class="a-plus">
+					<a href="#" class="plus-text" onclick="callTwo()">Add a place</a>
+					<img src="./Images/Plus icon.png" class="plus-icon" onclick="callTwo()">
+				</a>
+			</span>
+
+<!-- Profile -->
+			<div class="profile">
+				<img src="./Images/Profile icon.png" onclick="openProfileLogin()">
+			</div>
+		</ul>
+	</nav>
+
+<!-- Filters slide-->
+	<div id="filters-menu" class="filters-slide">
+		<a href="#" class="filters-btn-close" onclick="closeFiltersMenu()">&times;</a>
+		<ul>
+			<li class="unesco">
+				<img src="./Images/UNESCO icon+.png">
+				<a href="#">UNESCO buildings</a>
+			</li>
+			<li class="museums">
+				<img src="./Images/Museum icon+.png">
+				<a href="#">Museums</a>
+			</li>
+			<li class="swim">
+				<img src="./Images/Swim icon+.png">
+				<a href="#">Places to swim</a>
+			</li>
+			<li class="waterfalls">
+				<img src="./Images/Waterfall icon+.png">
+				<a href="#">Waterfalls</a>
+			</li>
+			<li class="mountains">
+				<img src="./Images/Mountain icon+.png">
+				<a href="#">Mountains</a>
+			</li>
+			<li class="parks">
+				<img src="./Images/Park icon+.png">
+				<a href="#">Parks</a>
+			</li>
+			<li class="spas">
+				<img src="./Images/Spa icon+.png">
+				<a href="#">Spas</a>
+			</li>
+			<li class="caves">
+				<img src="./Images/Cave icon+.png">
+				<a href="#">Caves</a>
+			</li>
+			<li class="lakes">
+				<img src="./Images/Lake icon+.png">
+				<a href="#">Lakes</a>
+			</li>
+			<li class="dams">
+				<img src="./Images/Dam icon+.png">
+				<a href="#">Dams</a>
+			</li>
+			<li class="viewpoints">
+				<img src="./Images/Viewpoint icon+.png">
+				<a href="#">Viewpoints</a>
+			</li>
+			<li class="others">
+				<img src="./Images/Other icon+.png">
+				<a href="#">Others</a>
+			</li>
+			<li class="experiences">
+				<img src="./Images/Experience icon+.png">
+				<a href="#">Experiences</a>
+			</li>
+		</ul>
+	</div>
+
+<!-- Plus slide -->
+	<div id="plus-menu" class="plus-slide">
+		<a href="#" class="plus-btn-close" onclick="closePlusMenu()">&times;</a>
+		<p class="p-one">Add a place by dragging the</p>
+		<p class="p-two">marker to the desired location.</p>
+		<form action="" method="post">
+			<div id="data"></div>
+			<input type="text" name="name" id="name" placeholder="Write a name" class="place-name" autocomplete="off" oninvalid="this.setCustomValidity('Please fill out the name.')" oninput="this.setCustomValidity('')" title="" required>
+			<select id="category" name="category" class="place-category" oninvalid="this.setCustomValidity('Please select a category.')" oninput="this.setCustomValidity('')" title="" required>
+				<option value="" disabled="" selected="" hidden="">Choose a category</option>
+				<option value="unesco">UNESCO buildings</option>
+  	  			<option value="museums">Museums</option>
+    			<option value="swim">Places to swim</option>
+    			<option value="waterfalls">Waterfalls</option>
+    			<option value="mountains">Mountains</option>
+  	  			<option value="parks">Parks</option>
+    			<option value="spas">Spas</option>
+    			<option value="caves">Caves</option>
+    			<option value="lakes">Lakes</option>
+  	  			<option value="dams">Dams</option>
+    			<option value="viewpoints">Viewpoints</option>
+    			<option value="others">Others</option>
+    			<option value="experiences">Experiences</option>
+			</select>
+			<textarea id="description" name="description" class="place-description" placeholder="Write a short description" rows="5" cols="30" oninvalid="this.setCustomValidity('Please fill out the description.')" oninput="this.setCustomValidity('')" title="" required></textarea>
+			<div class="place-file">
+				<input type="file" name="photo" id="photo" class="place-input" onchange="LoadFile(event)" oninvalid="this.setCustomValidity('Please select a photo.')" oninput="this.setCustomValidity('')" title="" required>
+				<button type="button" id="place-custom-button" class="place-custom-button">Upload a photo</button>
+                <input type="hidden" name="fileData" id="fileData">
+                <input type="hidden" name="mimeType" id="mimeType">
+                <input type="hidden" name="fileName" id="fileName">
+				<span id="place-custom-text" class="place-custom-text">No photo chosen, yet.</span>
+				<input type="reset" name="place-reset" class="place-reset" value="Cancel" onclick="photoReset()">
+				<input type="submit" name="place-submit" class="place-submit" value="Add">
+                <span></span>
+			</div>
+		</form>
+	</div>
+
+<!-- Profile slide -->
+	<div class="profile-slide" id="profile-slide">
+		<a href="#" class="profile-btn-close" onclick="closeProfile()">&times;</a>
+		<form class="profile-form">
+			<label for="email"><b>Email:</b></label>
+			<input type="email" name="email" placeholder="Enter your email" required class="email" autocomplete="off" title="">
+			<label for="password"><b>Password:</b></label>
+			<input type="password" name="password" placeholder="Enter your password" required class="password" oninvalid="this.setCustomValidity('Please fill out the password.')" oninput="this.setCustomValidity('')" title="">
+			<label for="password-repeat"><b>Repeat Password:</b></label>
+			<input type="password" name="password-repeat" placeholder="Repeat your password" required class="password-repeat" oninvalid="this.setCustomValidity('Please repeat the password.')" oninput="this.setCustomValidity('')" title="">
+        	<input type="checkbox" checked="checked" name="remember" class="profile-checkbox" style="margin-bottom:15px"> 
+        	<span> Remember me</span>
+      		<p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+      		<p>Already signed up? <a href="#" style="color:dodgerblue" onclick="openProfileLogin()">Log in</a>.</p>
+      		<input type="reset" name="profile-reset" class="profile-reset" onclick="closeProfile()" value="Cancel">
+      		<input type="submit" name="profile-submit" class="profile-submit" value="Sign Up" onclick="passwordConfirm()">
+		</form>
+	</div>
+	<div class="profile-slide-login" id="profile-slide-login">
+		<a href="#" class="profile-btn-close" onclick="closeProfileLogin()">&times;</a>
+		<form class="profile-form">
+			<label for="email"><b>Email:</b></label>
+			<input type="email" name="email" placeholder="Enter your email" required class="email" autocomplete="off" title="">
+			<label for="password"><b>Password:</b></label>
+			<input type="password" name="password" placeholder="Enter your password" required class="password" oninvalid="this.setCustomValidity('Please fill out the password.')" oninput="this.setCustomValidity('')" title="">
+        	<input type="checkbox" checked="checked" name="remember" class="profile-checkbox" style="margin-bottom:15px"> 
+        	<span> Remember me</span>
+      		<p>Not signed up yet? <a href="#" style="color:dodgerblue" onclick="openProfile()">Sign up</a>.</p>
+      		<input type="reset" class="profile-reset" onclick="closeProfileLogin()" value="Cancel">
+      		<input type="submit" class="profile-submit" value="Log in" id="submitFile">
+		</form>
+	</div>
+
+<!-- Map -->
+	<div id="map"></div>
+
+<!-- Script -->
+	<script>
+		const placeInputBtn = document.getElementById('photo')
+		const placeCustomBtn = document.getElementById('place-custom-button')
+		const placeCustomTxt = document.getElementById('place-custom-text')
+
+        // Presses <input type="file"> when user presses "Upload a photo" button
+		placeCustomBtn.addEventListener('click', function() {
+			placeInputBtn.click();
+		});
+
+        // Changes the text to the file name on it's upload
+		placeInputBtn.addEventListener('change', function() {
+			if (placeInputBtn.value) {
+				placeCustomTxt.innerHTML = placeInputBtn.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+			}
+			else {
+				placeCustomTxt.innerHTML = "No photo chosen, yet.";
+			}
+		});
+	</script>
+
+<!-- Database script -->
+    <script>
+    function LoadFile(event) {
+      // Devides uploaded file to letters, numbers, symbols and takes the important
+      var file = event.target.files[0];
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        console.log(e.target.result);
+        var fileData = e.target.result.substr(e.target.result.indexOf(",")+1);
+        var mimeTypeStart = e.target.result.indexOf("data:") + 5;
+        var mimeTypeEnd = e.target.result.indexOf(";");
+        var mimeType = e.target.result.substr(mimeTypeStart, mimeTypeEnd - mimeTypeStart);
+        var fileName = file.name;
+        document.getElementById("fileData").value = fileData;
+        document.getElementById("mimeType").value = mimeType;
+        document.getElementById("fileName").value = fileName;
+      };
+      reader.readAsDataURL(file);
+    }
+    </script>
+
+<!-- Copyright -->
+	<div class="copyright-background">
+		<div class="copyright">&copy;2020 Travel Placer All Rights Reserved</div>
+	</div>
+</body>
+</html>
